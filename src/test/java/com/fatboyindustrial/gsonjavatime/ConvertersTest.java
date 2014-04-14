@@ -25,44 +25,58 @@ package com.fatboyindustrial.gsonjavatime;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import org.junit.Test;
 
-import java.lang.reflect.Type;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.time.ZonedDateTime;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * Tests for {@link OffsetDateTimeConverter}.
+ * Tests for {@link Converters}.
  */
-public class OffsetDateTimeConverterTest
+public class ConvertersTest
 {
-  /** The specific genericized type for {@code OffsetDateTime}. */
-  private static final Type OFFSET_DATE_TIME_TYPE = new TypeToken<OffsetDateTime>(){}.getType();
-
   /**
-   * Tests that the {@link OffsetDateTime} can be round-tripped.
+   * Tests that the {@link Converters#registerAll} method registers the converters successfully.
    */
   @Test
-  public void testRoundTrip()
+  public void testRegisterAll()
   {
-    final Gson gson = registerOffsetDateTime(new GsonBuilder()).create();
-    final OffsetDateTime odt = OffsetDateTime.now();
+    final Gson gson = Converters.registerAll(new GsonBuilder()).create();
+    final Container original = new Container();
+    original.ld = LocalDate.now();
+    original.ldt = LocalDateTime.now();
+    original.lt = LocalTime.now();
+    original.odt = OffsetDateTime.now();
+    original.ot = OffsetTime.now();
+    original.zdt = ZonedDateTime.now();
 
-    assertThat(gson.fromJson(gson.toJson(odt), OffsetDateTime.class), is(odt));
+    final Container reconstituted = gson.fromJson(gson.toJson(original), Container.class);
+
+    assertThat(reconstituted.ld, is(original.ld));
+    assertThat(reconstituted.ldt, is(original.ldt));
+    assertThat(reconstituted.lt, is(original.lt));
+    assertThat(reconstituted.odt, is(original.odt));
+    assertThat(reconstituted.ot, is(original.ot));
+    assertThat(reconstituted.zdt, is(original.zdt));
   }
 
   /**
-   * Registers the {@link OffsetDateTimeConverter} converter.
-   * @param builder The GSON builder to register the converter with.
-   * @return A reference to {@code builder}.
+   * Container for serialising many fields.
    */
-  private static GsonBuilder registerOffsetDateTime(GsonBuilder builder)
+  private static class Container
   {
-    builder.registerTypeAdapter(OFFSET_DATE_TIME_TYPE, new OffsetDateTimeConverter());
-
-    return builder;
+    private LocalDate ld;
+    private LocalDateTime ldt;
+    private LocalTime lt;
+    private OffsetDateTime odt;
+    private OffsetTime ot;
+    private ZonedDateTime zdt;
   }
 }
