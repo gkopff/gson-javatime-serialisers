@@ -39,7 +39,7 @@ import static org.junit.Assert.assertThat;
  */
 public class ZonedDateTimeConverterTest
 {
-  /** The specific genericized type for {@code DateTime}. */
+  /** The specific genericized type for {@code ZonedDateTime}. */
   private static final Type DATE_TIME_TYPE = new TypeToken<ZonedDateTime>(){}.getType();
 
   /**
