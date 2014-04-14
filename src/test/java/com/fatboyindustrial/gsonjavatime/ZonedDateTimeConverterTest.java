@@ -40,7 +40,7 @@ import static org.junit.Assert.assertThat;
 public class ZonedDateTimeConverterTest
 {
   /** The specific genericized type for {@code ZonedDateTime}. */
-  private static final Type DATE_TIME_TYPE = new TypeToken<ZonedDateTime>(){}.getType();
+  private static final Type ZONED_DATE_TIME_TYPE = new TypeToken<ZonedDateTime>(){}.getType();
 
   /**
    * Tests that the {@link ZonedDateTime} can be round-tripped.
@@ -61,7 +61,7 @@ public class ZonedDateTimeConverterTest
    */
   private static GsonBuilder registerZonedDateTime(GsonBuilder builder)
   {
-    builder.registerTypeAdapter(DATE_TIME_TYPE, new ZonedDateTimeConverter());
+    builder.registerTypeAdapter(ZONED_DATE_TIME_TYPE, new ZonedDateTimeConverter());
 
     return builder;
   }
