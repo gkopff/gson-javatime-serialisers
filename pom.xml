@@ -46,6 +46,7 @@
   <scm>
     <url>https://github.com/gkopff/gson-javatime-serialisers</url>
     <connection>scm:git:https://github.com/gkopff/gson-javatime-serialisers.git</connection>
+    <developerConnection>scm:git:git@github.com:gkopff/gson-javatime-serialisers.git</developerConnection>
   </scm>
   
   <developers>
