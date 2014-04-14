@@ -29,39 +29,39 @@ import com.google.gson.reflect.TypeToken;
 import org.junit.Test;
 
 import java.lang.reflect.Type;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * Tests for {@link ZonedDateTimeConverter}.
+ * Tests for {@link LocalDateTimeConverter}.
  */
-public class ZonedDateTimeConverterTest
+public class LocalDateTimeConverterTest
 {
-  /** The specific genericized type for {@code ZonedDateTime}. */
-  private static final Type ZONED_DATE_TIME_TYPE = new TypeToken<ZonedDateTime>(){}.getType();
+  /** The specific genericized type for {@code LocalDateTime}. */
+  private static final Type LOCAL_DATE_TIME_TYPE = new TypeToken<LocalDateTime>(){}.getType();
 
   /**
-   * Tests that the {@link ZonedDateTime} can be round-tripped.
+   * Tests that the {@link LocalDateTime} can be round-tripped.
    */
   @Test
   public void testRoundTrip()
   {
-    final Gson gson = registerZonedDateTime(new GsonBuilder()).create();
-    final ZonedDateTime zdt = ZonedDateTime.now();
+    final Gson gson = registerLocalDateTime(new GsonBuilder()).create();
+    final LocalDateTime ldt = LocalDateTime.now();
 
-    assertThat(gson.fromJson(gson.toJson(zdt), ZonedDateTime.class), is(zdt));
+    assertThat(gson.fromJson(gson.toJson(ldt), LocalDateTime.class), is(ldt));
   }
 
   /**
-   * Registers the {@link ZonedDateTimeConverter} converter.
+   * Registers the {@link LocalDateTimeConverter} converter.
    * @param builder The GSON builder to register the converter with.
    * @return A reference to {@code builder}.
    */
-  private static GsonBuilder registerZonedDateTime(GsonBuilder builder)
+  private static GsonBuilder registerLocalDateTime(GsonBuilder builder)
   {
-    builder.registerTypeAdapter(ZONED_DATE_TIME_TYPE, new ZonedDateTimeConverter());
+    builder.registerTypeAdapter(LOCAL_DATE_TIME_TYPE, new LocalDateTimeConverter());
 
     return builder;
   }
