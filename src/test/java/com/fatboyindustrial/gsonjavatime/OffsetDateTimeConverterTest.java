@@ -39,7 +39,7 @@ import static org.junit.Assert.assertThat;
  */
 public class OffsetDateTimeConverterTest
 {
-  /** The specific genericized type for {@code LocalDateTime}. */
+  /** The specific genericized type for {@code OffsetDateTime}. */
   private static final Type OFFSET_DATE_TIME_TYPE = new TypeToken<OffsetDateTime>(){}.getType();
 
   /**
