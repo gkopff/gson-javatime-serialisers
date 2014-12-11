@@ -185,7 +185,7 @@
     <dependency>                               <!-- GSON -->
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
-      <version>2.2.2</version>
+      <version>2.3.1</version>
     </dependency>
     <dependency>                               <!-- Guava -->
       <groupId>com.google.guava</groupId>
