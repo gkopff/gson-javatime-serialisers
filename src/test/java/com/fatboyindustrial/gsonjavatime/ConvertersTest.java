@@ -25,8 +25,10 @@ package com.fatboyindustrial.gsonjavatime;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import org.junit.Test;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -56,6 +58,7 @@ public class ConvertersTest
     original.odt = OffsetDateTime.now();
     original.ot = OffsetTime.now();
     original.zdt = ZonedDateTime.now();
+    original.i = Instant.now();
 
     final Container reconstituted = gson.fromJson(gson.toJson(original), Container.class);
 
@@ -65,6 +68,7 @@ public class ConvertersTest
     assertThat(reconstituted.odt, is(original.odt));
     assertThat(reconstituted.ot, is(original.ot));
     assertThat(reconstituted.zdt, is(original.zdt));
+    assertThat(reconstituted.i, is(original.i));
   }
 
   /**
@@ -78,5 +82,6 @@ public class ConvertersTest
     private OffsetDateTime odt;
     private OffsetTime ot;
     private ZonedDateTime zdt;
+    private Instant i;
   }
 }
