@@ -2,7 +2,7 @@
 
 ## What is it?
 
-A set of [GSON][1] serialiser/deserialisers for dealing with [Java 8 `java.time` entities][1].  Wherever possible, [ISO 8601 string representations](http://en.wikipedia.org/wiki/ISO_8601) are used.
+A set of [GSON][1] serialiser/deserialisers for dealing with [Java 8 `java.time` entities][2].  Wherever possible, [ISO 8601 string representations](http://en.wikipedia.org/wiki/ISO_8601) are used.
 
 ## Getting it
 
