@@ -2,6 +2,7 @@ package com.fatboyindustrial.gsonjavatime;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonPrimitive;
 
 import org.junit.Test;
 
@@ -28,7 +29,7 @@ public class InstantConverterTest
   public void should_deserialise_from_iso_instant() throws Exception
   {
     Instant now = Instant.now();
-    Instant fromJson = gson.fromJson(gson.toJson(now), Instant.class);
+    Instant fromJson = gson.fromJson(new JsonPrimitive(now.toString()), Instant.class);
     
     assertThat(fromJson, equalTo(now));
   }
