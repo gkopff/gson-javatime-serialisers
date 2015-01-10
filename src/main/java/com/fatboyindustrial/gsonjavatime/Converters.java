@@ -27,6 +27,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -58,6 +59,9 @@ public class Converters
   /** The specific genericized type for {@code ZonedDateTime}. */
   public static final Type ZONED_DATE_TIME_TYPE = new TypeToken<ZonedDateTime>(){}.getType();
 
+  /** The specific genericized type for {@code Instant}. */
+  public static final Type INSTANT_TYPE = new TypeToken<Instant>(){}.getType();
+
   /**
    * Registers all the Java Time converters.
    * @param builder The GSON builder to register the converters with.
@@ -73,6 +77,7 @@ public class Converters
     registerOffsetDateTime(builder);
     registerOffsetTime(builder);
     registerZonedDateTime(builder);
+    registerInstant(builder);
 
     return builder;
   }
@@ -146,6 +151,13 @@ public class Converters
   {
     builder.registerTypeAdapter(ZONED_DATE_TIME_TYPE, new ZonedDateTimeConverter());
 
+    return builder;
+  }
+  
+  public static GsonBuilder registerInstant(GsonBuilder builder)
+  {
+    builder.registerTypeAdapter(INSTANT_TYPE, new InstantConverter());
+    
     return builder;
   }
 }
