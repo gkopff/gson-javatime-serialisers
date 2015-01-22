@@ -10,7 +10,7 @@ A set of [GSON][1] serialiser/deserialisers for dealing with [Java 8 `java.time`
 <dependency>
   <groupId>com.fatboyindustrial.gson-javatime-serialisers</groupId>
   <artifactId>gson-javatime-serialisers</artifactId>
-  <version>1.1.0</version>
+  <version>1.1.1</version>
 </dependency>
 ````
 
