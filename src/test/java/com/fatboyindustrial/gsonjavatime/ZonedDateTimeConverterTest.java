@@ -43,15 +43,31 @@ public class ZonedDateTimeConverterTest
   private static final Type ZONED_DATE_TIME_TYPE = new TypeToken<ZonedDateTime>(){}.getType();
 
   /**
-   * Tests that the {@link ZonedDateTime} can be round-tripped.
+   * Tests that serialising to JSON works.
    */
   @Test
-  public void testRoundTrip()
+  public void testSerialisation() throws Exception
   {
     final Gson gson = registerZonedDateTime(new GsonBuilder()).create();
-    final ZonedDateTime zdt = ZonedDateTime.now();
 
-    assertThat(gson.fromJson(gson.toJson(zdt), ZonedDateTime.class), is(zdt));
+    final ZonedDateTime zonedDateTime = ZonedDateTime.parse("1969-07-21T12:56:00+10:00[Australia/Brisbane]");
+    final String json = gson.toJson(zonedDateTime);
+
+    assertThat(json, is("\"1969-07-21T12:56:00+10:00[Australia/Brisbane]\""));
+  }
+
+  /**
+   * Tests that deserialising from JSON works.
+   */
+  @Test
+  public void testDeserialisation() throws Exception
+  {
+    final Gson gson = registerZonedDateTime(new GsonBuilder()).create();
+
+    final String json = "\"1969-07-21T12:56:00+10:00[Australia/Brisbane]\"";
+    final ZonedDateTime zonedDateTime = gson.fromJson(json, ZonedDateTime.class);
+
+    assertThat(zonedDateTime, is(ZonedDateTime.parse("1969-07-21T12:56:00+10:00[Australia/Brisbane]")));
   }
 
   /**

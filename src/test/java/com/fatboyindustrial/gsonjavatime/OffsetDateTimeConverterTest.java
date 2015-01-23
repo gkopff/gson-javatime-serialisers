@@ -43,15 +43,31 @@ public class OffsetDateTimeConverterTest
   private static final Type OFFSET_DATE_TIME_TYPE = new TypeToken<OffsetDateTime>(){}.getType();
 
   /**
-   * Tests that the {@link OffsetDateTime} can be round-tripped.
+   * Tests that serialising to JSON works.
    */
   @Test
-  public void testRoundTrip()
+  public void testSerialisation() throws Exception
   {
     final Gson gson = registerOffsetDateTime(new GsonBuilder()).create();
-    final OffsetDateTime odt = OffsetDateTime.now();
 
-    assertThat(gson.fromJson(gson.toJson(odt), OffsetDateTime.class), is(odt));
+    final OffsetDateTime offsetDateTime = OffsetDateTime.parse("1969-07-21T12:56:00+10:00");
+    final String json = gson.toJson(offsetDateTime);
+
+    assertThat(json, is("\"1969-07-21T12:56:00+10:00\""));
+  }
+
+  /**
+   * Tests that deserialising from JSON works.
+   */
+  @Test
+  public void testDeserialisation() throws Exception
+  {
+    final Gson gson = registerOffsetDateTime(new GsonBuilder()).create();
+
+    final String json = "\"1969-07-21T12:56:00+10:00\"";
+    final OffsetDateTime offsetDateTime = gson.fromJson(json, OffsetDateTime.class);
+
+    assertThat(offsetDateTime, is(OffsetDateTime.parse("1969-07-21T12:56:00+10:00")));
   }
 
   /**

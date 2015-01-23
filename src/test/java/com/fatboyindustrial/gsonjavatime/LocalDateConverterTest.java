@@ -43,15 +43,31 @@ public class LocalDateConverterTest
   private static final Type LOCAL_DATE_TYPE = new TypeToken<LocalDate>(){}.getType();
 
   /**
-   * Tests that the {@link LocalDate} can be round-tripped.
+   * Tests that serialising to JSON works.
    */
   @Test
-  public void testRoundTrip()
+  public void testSerialisation() throws Exception
   {
     final Gson gson = registerLocalDate(new GsonBuilder()).create();
-    final LocalDate ld = LocalDate.now();
 
-    assertThat(gson.fromJson(gson.toJson(ld), LocalDate.class), is(ld));
+    final LocalDate localDate = LocalDate.parse("1969-07-21");
+    final String json = gson.toJson(localDate);
+
+    assertThat(json, is("\"1969-07-21\""));
+  }
+
+  /**
+   * Tests that deserialising from JSON works.
+   */
+  @Test
+  public void testDeserialisation() throws Exception
+  {
+    final Gson gson = registerLocalDate(new GsonBuilder()).create();
+
+    final String json = "\"1969-07-21\"";
+    final LocalDate localDate = gson.fromJson(json, LocalDate.class);
+
+    assertThat(localDate, is(LocalDate.parse("1969-07-21")));
   }
 
   /**

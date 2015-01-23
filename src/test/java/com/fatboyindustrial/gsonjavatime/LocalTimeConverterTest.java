@@ -43,15 +43,31 @@ public class LocalTimeConverterTest
   private static final Type LOCAL_TIME_TYPE = new TypeToken<LocalTime>(){}.getType();
 
   /**
-   * Tests that the {@link LocalTime} can be round-tripped.
+   * Tests that serialising to JSON works.
    */
   @Test
-  public void testRoundTrip()
+  public void testSerialisation() throws Exception
   {
     final Gson gson = registerLocalTime(new GsonBuilder()).create();
-    final LocalTime lt = LocalTime.now();
 
-    assertThat(gson.fromJson(gson.toJson(lt), LocalTime.class), is(lt));
+    final LocalTime localTime = LocalTime.parse("12:56:00");
+    final String json = gson.toJson(localTime);
+
+    assertThat(json, is("\"12:56:00\""));
+  }
+
+  /**
+   * Tests that deserialising from JSON works.
+   */
+  @Test
+  public void testDeserialisation() throws Exception
+  {
+    final Gson gson = registerLocalTime(new GsonBuilder()).create();
+
+    final String json = "\"12:56:00\"";
+    final LocalTime localTime = gson.fromJson(json, LocalTime.class);
+
+    assertThat(localTime, is(LocalTime.parse("12:56:00")));
   }
 
   /**
