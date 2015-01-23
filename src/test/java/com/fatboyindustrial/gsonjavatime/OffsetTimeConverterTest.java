@@ -43,15 +43,31 @@ public class OffsetTimeConverterTest
   private static final Type OFFSET_TIME_TYPE = new TypeToken<OffsetTime>(){}.getType();
 
   /**
-   * Tests that the {@link OffsetTime} can be round-tripped.
+   * Tests that serialising to JSON works.
    */
   @Test
-  public void testRoundTrip()
+  public void testSerialisation() throws Exception
   {
     final Gson gson = registerOffsetTime(new GsonBuilder()).create();
-    final OffsetTime ot = OffsetTime.now();
 
-    assertThat(gson.fromJson(gson.toJson(ot), OffsetTime.class), is(ot));
+    final OffsetTime offsetTime = OffsetTime.parse("12:56:00+10:00");
+    final String json = gson.toJson(offsetTime);
+
+    assertThat(json, is("\"12:56:00+10:00\""));
+  }
+
+  /**
+   * Tests that deserialising from JSON works.
+   */
+  @Test
+  public void testDeserialisation() throws Exception
+  {
+    final Gson gson = registerOffsetTime(new GsonBuilder()).create();
+
+    final String json = "\"12:56:00+10:00\"";
+    final OffsetTime offsetTime = gson.fromJson(json, OffsetTime.class);
+
+    assertThat(offsetTime, is(OffsetTime.parse("12:56:00+10:00")));
   }
 
   /**

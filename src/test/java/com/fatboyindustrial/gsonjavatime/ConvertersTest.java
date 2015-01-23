@@ -47,14 +47,14 @@ import static org.junit.Assert.assertThat;
  */
 public class ConvertersTest
 {
-  private final Gson gson = Converters.registerAll(new GsonBuilder()).create();
-  
   /**
    * Tests that serialising to JSON works.
    */
   @Test
   public void testSerialisation() throws Exception
   {
+    final Gson gson = Converters.registerAll(new GsonBuilder()).create();
+
     final Container container = new Container();
     container.ld = LocalDate.of(1969, 7, 21);
     container.lt = LocalTime.of(12, 56, 0);
@@ -63,10 +63,10 @@ public class ConvertersTest
     container.ot = OffsetTime.of(container.lt, ZoneOffset.ofHours(10));
     container.zdt = ZonedDateTime.of(container.ld, container.lt, ZoneId.of("Australia/Brisbane"));
     container.i = container.odt.toInstant();
-    
-    final String jsonString = this.gson.toJson(container);
-    final JsonObject json = this.gson.fromJson(jsonString, JsonObject.class).getAsJsonObject();
-    
+
+    final String jsonString = gson.toJson(container);
+    final JsonObject json = gson.fromJson(jsonString, JsonObject.class).getAsJsonObject();
+
     assertThat(json.get("ld").getAsString(), is("1969-07-21"));
     assertThat(json.get("lt").getAsString(), is("12:56:00"));
     assertThat(json.get("ldt").getAsString(), is("1969-07-21T12:56:00"));
@@ -82,6 +82,8 @@ public class ConvertersTest
   @Test
   public void testDeserialisation() throws Exception
   {
+    final Gson gson = Converters.registerAll(new GsonBuilder()).create();
+
     final Container container = new Container();
     container.ld = LocalDate.of(1969, 7, 21);
     container.lt = LocalTime.of(12, 56, 0);
@@ -100,16 +102,16 @@ public class ConvertersTest
     serialized.add("zdt", new JsonPrimitive("1969-07-21T12:56:00+10:00[Australia/Brisbane]"));
     serialized.add("i", new JsonPrimitive("1969-07-21T02:56:00Z"));
 
-    final String jsonString = this.gson.toJson(serialized);
-    final Container deserialized = this.gson.fromJson(jsonString, Container.class);
+    final String jsonString = gson.toJson(serialized);
+    final Container deserialised = gson.fromJson(jsonString, Container.class);
     
-    assertThat(deserialized.ld, is(container.ld));
-    assertThat(deserialized.ldt, is(container.ldt));
-    assertThat(deserialized.lt, is(container.lt));
-    assertThat(deserialized.odt, is(container.odt));
-    assertThat(deserialized.ot, is(container.ot));
-    assertThat(deserialized.zdt, is(container.zdt));
-    assertThat(deserialized.i, is(container.i));
+    assertThat(deserialised.ld, is(container.ld));
+    assertThat(deserialised.ldt, is(container.ldt));
+    assertThat(deserialised.lt, is(container.lt));
+    assertThat(deserialised.odt, is(container.odt));
+    assertThat(deserialised.ot, is(container.ot));
+    assertThat(deserialised.zdt, is(container.zdt));
+    assertThat(deserialised.i, is(container.i));
   }
 
   /**
