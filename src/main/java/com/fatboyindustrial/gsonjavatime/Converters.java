@@ -153,7 +153,12 @@ public class Converters
 
     return builder;
   }
-  
+
+  /**
+   * Registers the {@link InstantConverter} converter.
+   * @param builder The GSON builder to register the converter with.
+   * @return A reference to {@code builder}.
+   */
   public static GsonBuilder registerInstant(GsonBuilder builder)
   {
     builder.registerTypeAdapter(INSTANT_TYPE, new InstantConverter());
