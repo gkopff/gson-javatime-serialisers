@@ -1,0 +1,8 @@
+Bundle-SymbolicName: com.fatboyindustrial.gson.javatime.serialisers
+Bundle-Name: Gson Java-Time serialisers
+Bundle-Description: ${project.description}
+
+-removeheaders: Private-Package
+
+-exportcontents:\
+    com.fatboyindustrial.gsonjavatime,\
