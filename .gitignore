@@ -8,6 +8,8 @@ target
 .idea/libraries/
 .idea/scala_settings.xml
 .idea/dictionaries/
+*.ipr
+*.iws
 
 # Mac
 .DS_Store
