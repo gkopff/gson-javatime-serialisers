@@ -27,12 +27,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import org.junit.Test;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 
 import java.lang.reflect.Type;
 import java.time.ZoneId;
+import java.time.DateTimeException;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -42,6 +45,8 @@ public class ZoneIdConverterTest {
 
     /** The specific genericized type for {@code ZoneId}. */
     private static final Type ZONE_ID_TYPE = new TypeToken<ZoneId>(){}.getType();
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     /**
      * Tests that serialising to JSON works.
@@ -68,6 +73,35 @@ public class ZoneIdConverterTest {
         final ZoneId zoneId = gson.fromJson(json, ZoneId.class);
 
         assertThat(zoneId, is(ZoneId.of("Australia/Brisbane")));
+    }
+
+    /**
+     * Tests that deserialising from JSON works with an empty value.
+     */
+    @Test
+    public void testDeserialisationWithEmptyValue() throws Exception
+    {
+        final Gson gson = registerZoneId(new GsonBuilder()).create();
+
+        final String json = "\"\"";
+        final ZoneId zoneId = gson.fromJson(json, ZoneId.class);
+
+        assertNull(zoneId);
+    }
+
+    /**
+     * Tests that deserialising from JSON works with a whitespace.
+     */
+    @Test
+    public void testDeserialisationWithWhitespace() throws Exception
+    {
+        exception.expect(DateTimeException.class);
+        exception.expectMessage("Invalid ID for ZoneOffset, invalid format: ");
+
+        final Gson gson = registerZoneId(new GsonBuilder()).create();
+
+        final String json = "\" \"";
+        final ZoneId zoneId = gson.fromJson(json, ZoneId.class);
     }
 
     /**

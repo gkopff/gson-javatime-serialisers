@@ -31,8 +31,6 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.lang.reflect.Type;
 import java.time.ZoneId;
 
@@ -56,8 +54,10 @@ public class ZoneIdConverter implements JsonSerializer<ZoneId>, JsonDeserializer
      * @return a JsonElement corresponding to the specified object.
      */
     @Override
-    public JsonElement serialize(final ZoneId src, final Type typeOfSrc, final JsonSerializationContext context) {
-        if (src == null) {
+    public JsonElement serialize(final ZoneId src, final Type typeOfSrc, final JsonSerializationContext context)
+    {
+        if (src == null)
+        {
             return null;
         }
         return new JsonPrimitive(src.getId());
@@ -80,18 +80,21 @@ public class ZoneIdConverter implements JsonSerializer<ZoneId>, JsonDeserializer
      */
     @Override
     public ZoneId deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws
-        JsonParseException {
-        if (json == null) {
+        JsonParseException
+    {
+        if (json == null)
+        {
             return null;
         }
-        if (json.isJsonNull()) {
+        if (json.isJsonNull())
+        {
             return null;
         }
-        final String stringValue = json.getAsString();
-        if (StringUtils.isBlank(stringValue)) {
+        final String zoneIdentifier = json.getAsString();
+        if (zoneIdentifier==null || zoneIdentifier.isEmpty())
+        {
             return null;
         }
-
-        return ZoneId.of(stringValue);
+        return ZoneId.of(zoneIdentifier);
     }
 }
