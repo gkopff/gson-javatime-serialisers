@@ -9,3 +9,4 @@
 ### Changed
 
  - Update Gson version to `2.9.0`
+ - Update JUnit version to `4.13.1` (test scope)
