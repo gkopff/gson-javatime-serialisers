@@ -6,3 +6,6 @@
  - Add `ZoneId` converter (contributed by [pavanpvpk](https://github.com/pavanpvpk))
  - Add OSGi awareness (based on work by [spegelref](https://github.com/spegelref)
 
+### Changed
+
+ - Update Gson version to `2.9.0`
