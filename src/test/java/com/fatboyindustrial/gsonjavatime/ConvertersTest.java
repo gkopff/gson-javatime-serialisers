@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Greg Kopff
+ * Copyright 2014-2022 Greg Kopff
  * All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -63,6 +63,7 @@ public class ConvertersTest
     container.ot = OffsetTime.of(container.lt, ZoneOffset.ofHours(10));
     container.zdt = ZonedDateTime.of(container.ld, container.lt, ZoneId.of("Australia/Brisbane"));
     container.i = container.odt.toInstant();
+    container.zi = ZoneId.of("Australia/Brisbane");
 
     final String jsonString = gson.toJson(container);
     final JsonObject json = gson.fromJson(jsonString, JsonObject.class).getAsJsonObject();
@@ -74,6 +75,7 @@ public class ConvertersTest
     assertThat(json.get("ot").getAsString(), is("12:56:00+10:00"));
     assertThat(json.get("zdt").getAsString(), is("1969-07-21T12:56:00+10:00[Australia/Brisbane]"));
     assertThat(json.get("i").getAsString(), is("1969-07-21T02:56:00Z"));
+    assertThat(json.get("zi").getAsString(), is("Australia/Brisbane"));
   }
 
   /**
@@ -92,6 +94,7 @@ public class ConvertersTest
     container.ot = OffsetTime.of(container.lt, ZoneOffset.ofHours(10));
     container.zdt = ZonedDateTime.of(container.ld, container.lt, ZoneId.of("Australia/Brisbane"));
     container.i = container.odt.toInstant();
+    container.zi = ZoneId.of("Australia/Brisbane");
     
     final JsonObject serialized = new JsonObject();
     serialized.add("ld", new JsonPrimitive("1969-07-21"));
@@ -101,6 +104,7 @@ public class ConvertersTest
     serialized.add("ot", new JsonPrimitive("12:56:00+10:00"));
     serialized.add("zdt", new JsonPrimitive("1969-07-21T12:56:00+10:00[Australia/Brisbane]"));
     serialized.add("i", new JsonPrimitive("1969-07-21T02:56:00Z"));
+    serialized.add("zi", new JsonPrimitive("Australia/Brisbane"));
 
     final String jsonString = gson.toJson(serialized);
     final Container deserialised = gson.fromJson(jsonString, Container.class);
@@ -112,6 +116,7 @@ public class ConvertersTest
     assertThat(deserialised.ot, is(container.ot));
     assertThat(deserialised.zdt, is(container.zdt));
     assertThat(deserialised.i, is(container.i));
+    assertThat(deserialised.zi, is(container.zi));
   }
 
   /**
@@ -126,5 +131,6 @@ public class ConvertersTest
     private OffsetTime ot;
     private ZonedDateTime zdt;
     private Instant i;
+    private ZoneId zi;
   }
 }

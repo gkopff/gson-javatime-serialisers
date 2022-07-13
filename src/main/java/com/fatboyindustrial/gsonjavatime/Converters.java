@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Greg Kopff
+ * Copyright 2014-2022 Greg Kopff
  * All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -33,6 +33,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 /**
@@ -62,6 +63,9 @@ public class Converters
   /** The specific genericized type for {@code Instant}. */
   public static final Type INSTANT_TYPE = new TypeToken<Instant>(){}.getType();
 
+  /** The specific genericized type for {@code ZoneId}. */
+  public static final Type ZONE_ID_TYPE = new TypeToken<ZoneId>(){}.getType();
+
   /**
    * Registers all the Java Time converters.
    * @param builder The GSON builder to register the converters with.
@@ -78,6 +82,7 @@ public class Converters
     registerOffsetTime(builder);
     registerZonedDateTime(builder);
     registerInstant(builder);
+    registerZoneId(builder);
 
     return builder;
   }
@@ -165,4 +170,16 @@ public class Converters
     
     return builder;
   }
+
+    /**
+     * Registers the {@link ZoneIdConverter} converter.
+     * @param builder The GSON builder to register the converter with.
+     * @return A reference to {@code builder}.
+     */
+   public static GsonBuilder registerZoneId(GsonBuilder builder)
+   {
+     builder.registerTypeAdapter(ZONE_ID_TYPE, new ZoneIdConverter());
+
+     return builder;
+   }
 }
