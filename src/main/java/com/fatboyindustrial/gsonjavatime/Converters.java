@@ -27,6 +27,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -66,6 +67,9 @@ public class Converters
   /** The specific genericized type for {@code ZoneId}. */
   public static final Type ZONE_ID_TYPE = new TypeToken<ZoneId>(){}.getType();
 
+  /** The specific genericized type for {@code Duration}. */
+  public static final Type DURATION_TYPE = new TypeToken<Duration>(){}.getType();
+
   /**
    * Registers all the Java Time converters.
    * @param builder The GSON builder to register the converters with.
@@ -83,6 +87,7 @@ public class Converters
     registerZonedDateTime(builder);
     registerInstant(builder);
     registerZoneId(builder);
+    registerDuration(builder);
 
     return builder;
   }
@@ -182,4 +187,16 @@ public class Converters
 
      return builder;
    }
+
+  /**
+   * Registers the {@link DurationConverter} converter.
+   * @param builder The GSON builder to register the converter with.
+   * @return A reference to {@code builder}.
+   */
+  public static GsonBuilder registerDuration(GsonBuilder builder)
+  {
+    builder.registerTypeAdapter(DURATION_TYPE, new DurationConverter());
+
+    return builder;
+  }
 }
