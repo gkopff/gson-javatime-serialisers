@@ -27,15 +27,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.OffsetDateTime;
-import java.time.OffsetTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 
 /**
  * The {@code Converters} class contains static methods for registering Java Time converters.
@@ -51,6 +43,9 @@ public class Converters
 
   /** The specific genericized type for {@code LocalTime}. */
   public static final Type LOCAL_TIME_TYPE = new TypeToken<LocalTime>(){}.getType();
+
+  /** The specific genericized type for {@code YearMonth}. */
+  private static final Type YEAR_MONTH_TYPE = TypeToken.get(YearMonth.class).getType();
 
   /** The specific genericized type for {@code OffsetDateTime}. */
   public static final Type OFFSET_DATE_TIME_TYPE = new TypeToken<OffsetDateTime>(){}.getType();
@@ -82,6 +77,7 @@ public class Converters
     registerLocalDate(builder);
     registerLocalDateTime(builder);
     registerLocalTime(builder);
+    registerYearMonth(builder);
     registerOffsetDateTime(builder);
     registerOffsetTime(builder);
     registerZonedDateTime(builder);
@@ -112,6 +108,18 @@ public class Converters
   public static GsonBuilder registerLocalDateTime(GsonBuilder builder)
   {
     builder.registerTypeAdapter(LOCAL_DATE_TIME_TYPE, new LocalDateTimeConverter());
+
+    return builder;
+  }
+
+  /**
+   * Registers the {@link YearMonthConverter} converter.
+   * @param builder The GSON builder to register the converter with.
+   * @return A reference to {@code builder}.
+   */
+  public static GsonBuilder registerYearMonth(GsonBuilder builder)
+  {
+    builder.registerTypeAdapter(YEAR_MONTH_TYPE, new YearMonthConverter());
 
     return builder;
   }
