@@ -29,15 +29,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import org.junit.Test;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.OffsetDateTime;
-import java.time.OffsetTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
+import java.time.*;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -59,6 +51,7 @@ public class ConvertersTest
     container.ld = LocalDate.of(1969, 7, 21);
     container.lt = LocalTime.of(12, 56, 0);
     container.ldt = LocalDateTime.of(container.ld, container.lt);
+    container.ym = YearMonth.of(2020, 11);
     container.odt = OffsetDateTime.of(container.ld, container.lt, ZoneOffset.ofHours(10));
     container.ot = OffsetTime.of(container.lt, ZoneOffset.ofHours(10));
     container.zdt = ZonedDateTime.of(container.ld, container.lt, ZoneId.of("Australia/Brisbane"));
@@ -71,6 +64,7 @@ public class ConvertersTest
     assertThat(json.get("ld").getAsString(), is("1969-07-21"));
     assertThat(json.get("lt").getAsString(), is("12:56:00"));
     assertThat(json.get("ldt").getAsString(), is("1969-07-21T12:56:00"));
+    assertThat(json.get("ym").getAsString(), is("2020-11"));
     assertThat(json.get("odt").getAsString(), is("1969-07-21T12:56:00+10:00"));
     assertThat(json.get("ot").getAsString(), is("12:56:00+10:00"));
     assertThat(json.get("zdt").getAsString(), is("1969-07-21T12:56:00+10:00[Australia/Brisbane]"));
@@ -90,6 +84,7 @@ public class ConvertersTest
     container.ld = LocalDate.of(1969, 7, 21);
     container.lt = LocalTime.of(12, 56, 0);
     container.ldt = LocalDateTime.of(container.ld, container.lt);
+    container.ym = YearMonth.of(2020, 11);
     container.odt = OffsetDateTime.of(container.ld, container.lt, ZoneOffset.ofHours(10));
     container.ot = OffsetTime.of(container.lt, ZoneOffset.ofHours(10));
     container.zdt = ZonedDateTime.of(container.ld, container.lt, ZoneId.of("Australia/Brisbane"));
@@ -100,6 +95,7 @@ public class ConvertersTest
     serialized.add("ld", new JsonPrimitive("1969-07-21"));
     serialized.add("lt", new JsonPrimitive("12:56:00"));
     serialized.add("ldt", new JsonPrimitive("1969-07-21T12:56:00"));
+    serialized.add("ym", new JsonPrimitive("2020-11"));
     serialized.add("odt", new JsonPrimitive("1969-07-21T12:56:00+10:00"));
     serialized.add("ot", new JsonPrimitive("12:56:00+10:00"));
     serialized.add("zdt", new JsonPrimitive("1969-07-21T12:56:00+10:00[Australia/Brisbane]"));
@@ -112,6 +108,7 @@ public class ConvertersTest
     assertThat(deserialised.ld, is(container.ld));
     assertThat(deserialised.ldt, is(container.ldt));
     assertThat(deserialised.lt, is(container.lt));
+    assertThat(deserialised.ym, is(container.ym));
     assertThat(deserialised.odt, is(container.odt));
     assertThat(deserialised.ot, is(container.ot));
     assertThat(deserialised.zdt, is(container.zdt));
@@ -127,6 +124,7 @@ public class ConvertersTest
     private LocalDate ld;
     private LocalDateTime ldt;
     private LocalTime lt;
+    private YearMonth ym;
     private OffsetDateTime odt;
     private OffsetTime ot;
     private ZonedDateTime zdt;
